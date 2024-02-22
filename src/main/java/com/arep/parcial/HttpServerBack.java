@@ -151,7 +151,7 @@ public class HttpServerBack {
                 arg = Integer.parseInt(value);
                 typeClass = int.class;
             }else if(paramType.equals("String")){
-                arg = value;
+                arg = value.substring(3,4);
                 typeClass = String.class;
             } else if(paramType.equals("double")){
                 arg = Double.parseDouble(value);
@@ -191,7 +191,7 @@ public class HttpServerBack {
                 arg1 = Integer.parseInt(value1);
                 typeClass1 = int.class;
             }else if(paramType1.equals("String")){
-                arg1 = value1;
+                arg1 = value1.substring(3,4);
                 typeClass1 = String.class;
             } else if(paramType1.equals("double")){
                 arg1 = Double.parseDouble(value1);
@@ -202,7 +202,7 @@ public class HttpServerBack {
                 arg2 = Integer.parseInt(value2);
                 typeClass2 = int.class;
             }else if(paramType2.equals("String")){
-                arg2 = value2;
+                arg2 = value2.substring(3,4);
                 typeClass2 = String.class;
             } else if(paramType2.equals("double")){
                 arg2 = Double.parseDouble(value2);
