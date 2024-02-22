@@ -137,7 +137,7 @@ public class HttpServerBack {
                 typeClass = String.class;
             } else if(paramType.equals("double")){
                 arg = Double.parseDouble(value);
-                typeClass = Double.class;
+                typeClass = Double.TYPE;
             }
 
             Method method = c.getMethod(methodName, typeClass);
@@ -163,28 +163,36 @@ public class HttpServerBack {
             System.out.println(value2);
 
             Object arg1 = null;
+            Class<?> typeClass1 = null;
             Object arg2 = null;
+            Class<?> typeClass2 = null;
 
             Class c = Class.forName(className);
 
             if(paramType1.equals("int")){
                 arg1 = Integer.parseInt(value1);
+                typeClass1 = int.class;
             }else if(paramType1.equals("String")){
                 arg1 = value1;
+                typeClass1 = String.class;
             } else if(paramType1.equals("double")){
                 arg1 = Double.parseDouble(value1);
+                typeClass1 = Double.TYPE;
             }
 
             if(paramType2.equals("int")){
                 arg2 = Integer.parseInt(value2);
+                typeClass2 = int.class;
             }else if(paramType2.equals("String")){
                 arg2 = value2;
+                typeClass2 = String.class;
             } else if(paramType2.equals("double")){
                 arg2 = Double.parseDouble(value2);
+                typeClass2 = Double.TYPE;
             }
 
-            Method method = c.getMethod(methodName);
-            Object result = method.invoke(arg1,arg2);
+            Method method = c.getMethod(methodName, typeClass1, typeClass2);
+            Object result = method.invoke(null, arg1,arg2);
             return result.toString();
         }
         return httpError;
