@@ -35,11 +35,12 @@ public class HttpConnection {
 
             // print result
             System.out.println(response.toString());
+            return response.toString();
         } else {
             System.out.println("GET request not worked");
         }
         System.out.println("GET DONE");
-        return "a";
+        return "Error";
     }
 
 } 

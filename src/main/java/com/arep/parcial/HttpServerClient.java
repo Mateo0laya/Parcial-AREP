@@ -128,7 +128,7 @@ public class HttpServerClient {
     }
 
     private static String query(String path) throws IOException {
-        String command = path.split("?")[1];
+        String command = path.split("consulta")[1].substring(1);
         System.out.println(command);
         return HttpConnection.query(command);
     }

@@ -59,7 +59,7 @@ public class HttpServerBack {
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibí: " + inputLine);
                 if(first){
-                    path = inputLine;
+                    path = inputLine.split(" ")[1];
                     first = false;
                     System.out.println(path);
                 }
@@ -87,6 +87,7 @@ public class HttpServerBack {
         }
     }
     private static String resolve(String command) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        System.out.println("Resolviendo");
         if(command.startsWith("Class")){
             String className = command.substring(6, -1);
             System.out.println(className);
@@ -97,7 +98,9 @@ public class HttpServerBack {
         } else if(command.startsWith("invoke")){
             String parameters = command.substring(7);
             String className = parameters.split(",")[0];
-            String methodName = parameters.split(",")[1].substring(0, -1);
+            String methodName = parameters.split(",")[1].substring(3);
+            int length = methodName.length();
+            methodName = methodName.substring(0, length-1);
 
             System.out.println(className);
             System.out.println(methodName);
@@ -110,9 +113,11 @@ public class HttpServerBack {
         } else if(command.startsWith("unaryInvoke")){
             String parameters = command.substring(12);
             String className = parameters.split(",")[0];
-            String methodName = parameters.split(",")[1];
-            String paramType = parameters.split(",")[2];
-            String value = parameters.split(",")[3].substring(0, -1);
+            String methodName = parameters.split(",")[1].substring(3);
+            String paramType = parameters.split(",")[2].substring(3);
+            String value = parameters.split(",")[3].substring(3);
+            int length = value.length();
+            value = value.substring(0, length-1);
 
             System.out.println(className);
             System.out.println(methodName);
@@ -120,29 +125,35 @@ public class HttpServerBack {
             System.out.println(value);
 
             Object arg = null;
+            Class<?> typeClass = null;
 
             Class c = Class.forName(className);
 
             if(paramType.equals("int")){
                 arg = Integer.parseInt(value);
+                typeClass = int.class;
             }else if(paramType.equals("String")){
                 arg = value;
+                typeClass = String.class;
             } else if(paramType.equals("double")){
                 arg = Double.parseDouble(value);
+                typeClass = Double.class;
             }
 
-            Method method = c.getMethod(methodName);
-            Object result = method.invoke(arg);
+            Method method = c.getMethod(methodName, typeClass);
+            Object result = method.invoke(null, arg);
             return result.toString();
 
-        } else if(command.startsWith("binatyInvoke")){
+        } else if(command.startsWith("binaryInvoke")){
             String parameters = command.substring(13);
             String className = parameters.split(",")[0];
-            String methodName = parameters.split(",")[1];
-            String paramType1 = parameters.split(",")[2];
-            String value1 = parameters.split(",")[3];
-            String paramType2 = parameters.split(",")[4];
-            String value2 = parameters.split(",")[5].substring(0, -1);
+            String methodName = parameters.split(",")[1].substring(3);
+            String paramType1 = parameters.split(",")[2].substring(3);
+            String value1 = parameters.split(",")[3].substring(3);
+            String paramType2 = parameters.split(",")[4].substring(3);
+            String value2 = parameters.split(",")[5].substring(3);
+            int length = value2.length();
+            value2 = value2.substring(0, length-1);
 
             System.out.println(className);
             System.out.println(methodName);
