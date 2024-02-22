@@ -97,15 +97,19 @@ public class HttpServerBack {
             System.out.println(className);
             Class c = Class.forName(className);
             Field[] fields = c.getDeclaredFields();
-            String fieldsString = ""; 
+            String fieldsString = "["; 
             for(Field f : fields){
-                fieldsString = fieldsString + f.toString() + " ";
+                System.out.println(f.toString());
+                fieldsString = fieldsString + f.toString() + ", ";
             }
+            fieldsString = fieldsString + "]";
             Method[] methods = c.getDeclaredMethods();
-            String methodsString = "";
+            String methodsString = "[";
             for(Method m : methods){
-                methodsString = methodsString + m.toString() + " ";
+                System.out.println(m.toString());
+                methodsString = methodsString + m.toString() + ", ";
             }
+            methodsString = methodsString + "]";
             String response = "{Fields: " + fieldsString + ", " + "Methods: " + methodsString + "}";
             return response;
 
