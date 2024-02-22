@@ -1,7 +1,7 @@
-#Parcial AREP
+# Parcial AREP
 Mateo Olaya Garzón 
 
-##Instrucciones para ejecutar la aplicación
+## Instrucciones para ejecutar la aplicación
 
 1. Clone el repositorio
 2. En el repositorio encontrará dos clases en la ruta: src/main/java/com/arep/parcial, las cuales son HttpServerClient.java y HttpServerBack.java
