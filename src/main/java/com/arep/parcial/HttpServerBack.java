@@ -9,11 +9,13 @@ public class HttpServerBack {
         try {
             serverSocket = new ServerSocket(45000);
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 35000.");
+            System.err.println("Could not listen on port: 45000.");
             System.exit(1);
         }
 
         Socket clientSocket = null;
+
+        boolean isRunning = true;
         try {
             System.out.println("Listo para recibir ...");
             clientSocket = serverSocket.accept();

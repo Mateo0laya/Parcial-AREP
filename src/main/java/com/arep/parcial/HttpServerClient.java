@@ -10,9 +10,20 @@ public class HttpServerClient {
     + "Content-Type: text/html\r\n"
     + "\r\n";
 
-    public static String headerError = "HTTP/1.1 400 Not found\r\n"
+    public static String httpError = "HTTP/1.1 400 Not found\r\n"
     + "Content-Type: text/html\r\n"
-    + "\r\n";
+    + "\r\n"
+    + "<!DOCTYPE html>\r\n" + //
+            "<html>\r\n" + //
+            "    <head>\r\n" + //
+            "        <title>Page Not Found</title>\r\n" + //
+            "        <meta charset=\"UTF-8\">\r\n" + //
+            "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n" + //
+            "    </head>\r\n" + //
+            "    <body>\r\n" + //
+                    "Page Not Found\r\n"+
+            "    </body>\r\n" + //
+            "</html>";
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         try {
@@ -43,13 +54,21 @@ public class HttpServerClient {
                     new InputStreamReader(clientSocket.getInputStream()));
             
             String inputLine, outputLine;
+            String path = "";
+            boolean first = true;
+
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibí: " + inputLine);
+                if(first){
+                    path = inputLine.split(" ")[1];
+                    System.out.println(path);
+                    first = false;
+                }
                 if (!in.ready()) {
                     break;
                 }
             }
-            outputLine = response();
+            outputLine = response(path);
             out.println(outputLine);
             out.close();
             in.close();
@@ -59,9 +78,10 @@ public class HttpServerClient {
         serverSocket.close();
     }
 
-    private static String response(){
+    private static String response(String path) throws IOException{
         String outputLine;
-        outputLine = headerOK + "<!DOCTYPE html>\r\n" + //
+        if(path.startsWith("/cliente" )){
+            outputLine = headerOK + "<!DOCTYPE html>\r\n" + //
                 "<html>\r\n" + //
                 "    <head>\r\n" + //
                 "        <title>Reflective ChatGPT Mateo Olaya</title>\r\n" + //
@@ -70,7 +90,7 @@ public class HttpServerClient {
                 "    </head>\r\n" + //
                 "    <body>\r\n" + //
                 "        <h1>Reflective ChatGPT</h1>\r\n" + //
-                "        <form action=\"/hello\">\r\n" + //
+                "        <form action=\"/consulta\">\r\n" + //
                 "            <label for=\"name\">Command</label><br>\r\n" + //
                 "            <input type=\"text\" id=\"name\" name=\"name\" value=\"John\"><br><br>\r\n" + //
                 "            <input type=\"button\" value=\"Submit\" onclick=\"loadGetMsg()\">\r\n" + //
@@ -85,7 +105,7 @@ public class HttpServerClient {
                 "                    document.getElementById(\"getrespmsg\").innerHTML =\r\n" + //
                 "                    this.responseText;\r\n" + //
                 "                }\r\n" + //
-                "                xhttp.open(\"GET\", \"/hello?name=\"+nameVar);\r\n" + //
+                "                xhttp.open(\"GET\", \"/consulta?comando=\"+nameVar);\r\n" + //
                 "                xhttp.send();\r\n" + //
                 "            }\r\n" + //
                 "        </script>\r\n" + //
@@ -98,6 +118,18 @@ public class HttpServerClient {
 
                 "    </body>\r\n" + //
                 "</html>";
-        return outputLine;
+            return outputLine;
+        } else if(path.startsWith("/consulta")){
+            return headerOK + query(path);
+        } else {
+            return httpError; 
+        }
+        
+    }
+
+    private static String query(String path) throws IOException {
+        String command = path.split("?")[1];
+        System.out.println(command);
+        return HttpConnection.query(command);
     }
 }
