@@ -25,3 +25,7 @@ Mateo Olaya Garzón
 - invoke(java.lang.System, getenv)
 
 ![image](https://github.com/Mateo0laya/Parcial-AREP/assets/89365336/cac530b4-abf5-472d-a676-f2122ec89c6e)
+
+- Class(java.lang.Math)
+
+![image](https://github.com/Mateo0laya/Parcial-AREP/assets/89365336/8f721433-fe10-47a2-9b03-af5bf190194f)
