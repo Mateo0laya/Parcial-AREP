@@ -29,3 +29,8 @@ Mateo Olaya Garzón
 - Class(java.lang.Math)
 
 ![image](https://github.com/Mateo0laya/Parcial-AREP/assets/89365336/8f721433-fe10-47a2-9b03-af5bf190194f)
+
+- unaryInvoke(java.lang.Integer, valueOf, String, "3")
+
+![image](https://github.com/Mateo0laya/Parcial-AREP/assets/89365336/9a170570-0f67-43ec-a70e-0a4ecfae38cd)
+
