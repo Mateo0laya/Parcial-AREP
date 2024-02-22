@@ -89,11 +89,25 @@ public class HttpServerBack {
     private static String resolve(String command) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         System.out.println("Resolviendo");
         if(command.startsWith("Class")){
-            String className = command.substring(6, -1);
+            String className = command.substring(6);
+
+            int length = className.length();
+            className = className.substring(0, length-1);
+
             System.out.println(className);
             Class c = Class.forName(className);
             Field[] fields = c.getDeclaredFields();
+            String fieldsString = ""; 
+            for(Field f : fields){
+                fieldsString = fieldsString + f.toString() + " ";
+            }
             Method[] methods = c.getDeclaredMethods();
+            String methodsString = "";
+            for(Method m : methods){
+                methodsString = methodsString + m.toString() + " ";
+            }
+            String response = "{Fields: " + fieldsString + ", " + "Methods: " + methodsString + "}";
+            return response;
 
         } else if(command.startsWith("invoke")){
             String parameters = command.substring(7);
